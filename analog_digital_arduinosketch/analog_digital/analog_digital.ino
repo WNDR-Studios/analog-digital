@@ -69,19 +69,8 @@ void setup(void) {
   matrix.fillScreen(0);
   matrix.show();
 
-  // Calculate the negative Y offset so that digitCharCount characters are
-  // evenly distributed across the full screen height with no visible gap
-  // when they wrap around from bottom to top.
-  int charHeight = 8 * charScale; // default GFX font is 8 px tall
-  charOffset = (((matrix.height() - (charHeight * (digitCharCount - 1))) / (digitCharCount - 1)) + charHeight) * -1;
-
-  // Space digits evenly along the column, each offset by charOffset * index
-  for (int i = 0; i < digitCharCount; i++) {
-    digitChars[i] = initDigit(charOffset * i, matrix.color565(255, 255, 255));
-  }
-
-  // Start with one random waveform; more will spawn dynamically
-  waves[0] = initWaveform(10, 100, 6, waveformArray[random(numWaveforms)], matrix);
+  initDigital(matrix);
+  initAnalog(matrix);
 
   Serial.println("Setup complete");
 }

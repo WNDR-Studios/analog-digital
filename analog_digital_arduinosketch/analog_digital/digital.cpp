@@ -399,6 +399,26 @@ static void spawnEye(Adafruit_Protomatter &matrix) {
 }
 
 /**
+ * initDigital()
+ *
+ * Initializes the digital scene. Computes the vertical spacing so that
+ * digitCharCount characters are evenly distributed across the screen
+ * height with seamless wrapping, then populates the scrolling column
+ * with random '0'/'1' characters.
+ */
+void initDigital(Adafruit_Protomatter &matrix) {
+  // The default GFX font is 8 px tall; charScale multiplies that.
+  // charOffset is the negative Y distance between characters, calculated
+  // so they tile evenly and wrap from bottom back to top without a gap.
+  int charHeight = 8 * charScale;
+  charOffset = (((matrix.height() - (charHeight * (digitCharCount - 1))) / (digitCharCount - 1)) + charHeight) * -1;
+
+  for (int i = 0; i < digitCharCount; i++) {
+    digitChars[i] = initDigit(charOffset * i, matrix.color565(255, 255, 255));
+  }
+}
+
+/**
  * drawDigital()
  *
  * Main entry point for the digital scene, called once per frame.

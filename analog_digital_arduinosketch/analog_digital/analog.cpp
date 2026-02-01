@@ -150,19 +150,72 @@ static int noiseWave(int y, float radianOffset, Adafruit_Protomatter &matrix) {
 }
 
 /**
+ * Curated palette of 12 soft, bright colors that are visually distinct from
+ * each other on an LED matrix. Stored as RGB triplets and converted to
+ * RGB565 at init time via matrix.color565().
+ */
+static const uint8_t PALETTE_SIZE = 12;
+static const uint8_t palette[PALETTE_SIZE][3] = {
+  {255,  40,  40},  // Red
+  {255, 140,   0},  // Orange
+  {230, 210,   0},  // Gold
+  { 40, 200,  40},  // Green
+  {  0, 180, 140},  // Teal
+  {  0, 140, 255},  // Azure
+  { 60,  60, 255},  // Blue
+  {140,  40, 255},  // Purple
+  {220,  40, 220},  // Magenta
+  {255,  50, 130},  // Hot pink
+  {  0, 220, 220},  // Cyan
+  {180, 160,   0},  // Olive yellow
+};
+
+/**
+ * pickUnusedColor()
+ *
+ * Returns a random palette index that isn't currently used by any active wave.
+ * If all 12 colors are somehow in use, falls back to a purely random pick.
+ */
+static int pickUnusedColor() {
+  // Collect palette indices currently on screen
+  bool used[PALETTE_SIZE] = {};
+  for (int i = 0; i < numWaves; i++) {
+    if (waves[i].active) {
+      used[waves[i].colorIndex] = true;
+    }
+  }
+  // Build list of available indices
+  uint8_t available[PALETTE_SIZE];
+  int count = 0;
+  for (int i = 0; i < PALETTE_SIZE; i++) {
+    if (!used[i]) {
+      available[count++] = i;
+    }
+  }
+  if (count > 0) {
+    return available[random(count)];
+  }
+  return random(PALETTE_SIZE);  // Fallback (shouldn't happen with 12 colors / 5 waves)
+}
+
+/**
  * initWaveform()
  *
- * Creates a new Wave starting at the top of the screen with a random color.
- * The radianOffset parameter is multiplied by PI so callers can pass simple
- * integers (e.g. 10 becomes ~31.4 radians across the screen height).
+ * Creates a new Wave with a color chosen from the palette, guaranteed not
+ * to duplicate any color already on screen. The radianOffset parameter is
+ * multiplied by PI so callers can pass simple integers (e.g. 10 becomes
+ * ~31.4 radians across the screen height).
  */
 Wave initWaveform(int radianOffset, int length, int speed, Waveforms waveform, Adafruit_Protomatter &matrix) {
   Wave wave;
-  wave.curY = 0;
   wave.length = length;
   wave.speed = speed;
+  wave.direction = random(2) ? 1 : -1;  // Randomly scroll down or up
+  // Downward waves start at the top; upward waves start at the bottom
+  wave.curY = (wave.direction == 1) ? 0 : matrix.height();
   wave.radianOffset = radianOffset * PI;
-  wave.color = matrix.color565(random(255), random(255), random(255));
+  wave.colorIndex = pickUnusedColor();
+  wave.color = matrix.color565(palette[wave.colorIndex][0], palette[wave.colorIndex][1], palette[wave.colorIndex][2]);
   wave.waveform = waveform;
   wave.active = true;
   return wave;
@@ -181,17 +234,23 @@ Wave initWaveform(int radianOffset, int length, int speed, Waveforms waveform, A
  * visually, mimicking how these waveforms appear on a real oscilloscope.
  */
 static void drawWaveform(struct Wave &wave, Adafruit_Protomatter &matrix) {
-  float yMapped;
-  float sinY;
   int x;
-  float matrixHeight = matrix.height();
-  float matrixWidth = matrix.width();
+  int screenH = matrix.height();
 
-  // Clamp the visible range to screen bounds
-  int startingY = wave.curY - wave.length;
+  // Compute the visible Y range. For downward waves the leading edge is
+  // curY with the tail above; for upward waves the leading edge is curY
+  // with the tail below.
+  int startingY, endingY;
+  if (wave.direction == 1) {
+    startingY = wave.curY - wave.length;
+    endingY = wave.curY;
+  } else {
+    startingY = wave.curY;
+    endingY = wave.curY + wave.length;
+  }
+  // Clamp to screen bounds
   if (startingY < 0) startingY = 0;
-  int endingY = wave.curY;
-  if (endingY > matrix.height()) endingY = matrix.height();
+  if (endingY > screenH) endingY = screenH;
 
   for (int y = startingY; y <= endingY; y++) {
     // Dispatch to the correct waveform generator
@@ -238,7 +297,18 @@ static void drawWaveform(struct Wave &wave, Adafruit_Protomatter &matrix) {
     }
   }
 
-  wave.curY = wave.curY + wave.speed;
+  // Advance the leading edge in the wave's scroll direction
+  wave.curY = wave.curY + wave.speed * wave.direction;
+}
+
+/**
+ * initAnalog()
+ *
+ * Initializes the analog scene by spawning the first waveform.
+ * Additional waves will spawn dynamically during drawAnalog().
+ */
+void initAnalog(Adafruit_Protomatter &matrix) {
+  waves[0] = initWaveform(10, 100, 6, waveformArray[random(numWaveforms)], matrix);
 }
 
 /**
@@ -273,9 +343,16 @@ void drawAnalog(Adafruit_Protomatter &matrix) {
 
     drawWaveform(waves[i], matrix);
 
-    // A wave is "off-screen" when its trailing edge has passed the bottom
-    int startingY = waves[i].curY - waves[i].length;
-    if (startingY > matrix.height()) {
+    // A wave is off-screen once its trailing edge has passed the far side:
+    // downward waves expire when the tail clears the bottom,
+    // upward waves expire when the tail clears the top.
+    bool offScreen;
+    if (waves[i].direction == 1) {
+      offScreen = (waves[i].curY - waves[i].length) > matrix.height();
+    } else {
+      offScreen = (waves[i].curY + waves[i].length) < 0;
+    }
+    if (offScreen) {
       waves[i].active = false;
     } else {
       activeCount++;

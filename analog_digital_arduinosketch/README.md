@@ -11,7 +11,7 @@ An LED matrix art installation for the Adafruit MatrixPortal ESP32-S3, driving a
 
 ### Analog Mode
 
-Colored waveforms scroll top-to-bottom across the screen. Up to four waveforms can be active simultaneously, each randomly assigned one of six shapes:
+Colored waveforms scroll across the screen. Each wave randomly scrolls either downward or upward, so they frequently cross and overlap each other. Up to four waveforms can be active simultaneously, each randomly assigned one of six shapes:
 
 | Shape | Description |
 |-------|-------------|
@@ -22,7 +22,7 @@ Colored waveforms scroll top-to-bottom across the screen. Up to four waveforms c
 | Square | Binary high/low with horizontal transition lines connecting the jumps |
 | Noise | Smooth random curves using cosine-interpolated control points |
 
-Each waveform has a random color, frequency, tail length, and scroll speed. At least one waveform is always on screen, and additional ones spawn randomly.
+Each waveform is assigned a color from a curated palette of 12 bold, saturated, and visually distinct hues (red, orange, gold, green, teal, azure, blue, purple, magenta, hot pink, cyan, and olive yellow). Frequency, tail length, and scroll speed are randomized. At least one waveform is always on screen, and additional ones spawn randomly.
 
 ### Digital Mode
 

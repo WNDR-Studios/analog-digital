@@ -53,6 +53,16 @@ DigitChar initDigit(int yOffset, int color);
  *
  * @param matrix  Reference to the LED matrix
  */
+/**
+ * initDigital()
+ *
+ * Initializes the digital scene by computing character spacing and
+ * populating the scrolling digit column. Call once from setup().
+ *
+ * @param matrix  Reference to the LED matrix
+ */
+void initDigital(Adafruit_Protomatter &matrix);
+
 void drawDigital(Adafruit_Protomatter &matrix);
 
 #endif

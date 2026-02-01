@@ -40,8 +40,10 @@ struct Wave {
   int curY;            // Leading edge Y position (advances each frame)
   int curClearY;       // Trailing edge Y position for erasing old pixels
   int color;           // 16-bit RGB565 color
+  int colorIndex;      // Index into the palette (used to prevent duplicate colors on screen)
   int length;          // Visible length in pixels between leading and trailing edges
   int speed;           // Pixels the leading edge advances per frame
+  int direction;       // +1 = scrolls downward, -1 = scrolls upward
   float radianOffset;  // Controls waveform frequency — higher = more cycles on screen
   Waveforms waveform;  // Which shape generator to use
   bool active;         // false once the wave has fully scrolled off-screen
@@ -76,6 +78,16 @@ Wave initWaveform(int radianOffset, int length, int speed, Waveforms waveform, A
  *
  * @param matrix  Reference to the LED matrix
  */
+/**
+ * initAnalog()
+ *
+ * Initializes the analog waveform scene by spawning the first waveform.
+ * Call once from setup().
+ *
+ * @param matrix  Reference to the LED matrix
+ */
+void initAnalog(Adafruit_Protomatter &matrix);
+
 void drawAnalog(Adafruit_Protomatter &matrix);
 
 #endif
