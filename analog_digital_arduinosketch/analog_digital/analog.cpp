@@ -275,7 +275,11 @@ static void drawWaveform(struct Wave &wave, Adafruit_Protomatter &matrix) {
         break;
     }
 
+    // Draw 2-pixel thick line horizontally
     matrix.drawPixel(x, y, wave.color);
+    if (x + 1 < matrix.width()) {
+      matrix.drawPixel(x + 1, y, wave.color);
+    }
 
     // Sawtooth snap-back: if the next row's X jumps more than half the
     // screen width to the left, it's a wrap-around — draw a horizontal
@@ -284,6 +288,9 @@ static void drawWaveform(struct Wave &wave, Adafruit_Protomatter &matrix) {
       int xNext = sawWave(y + 1, wave.radianOffset, matrix);
       if (xNext < x - (matrix.width() / 2)) {
         matrix.drawFastHLine(0, y, matrix.width(), wave.color);
+        if (y + 1 < matrix.height()) {
+          matrix.drawFastHLine(0, y + 1, matrix.width(), wave.color);
+        }
       }
     }
 
@@ -293,6 +300,9 @@ static void drawWaveform(struct Wave &wave, Adafruit_Protomatter &matrix) {
       int xNext = sqrWave(y + 1, wave.radianOffset, matrix);
       if (xNext != x) {
         matrix.drawFastHLine(0, y, matrix.width(), wave.color);
+        if (y + 1 < matrix.height()) {
+          matrix.drawFastHLine(0, y + 1, matrix.width(), wave.color);
+        }
       }
     }
   }
