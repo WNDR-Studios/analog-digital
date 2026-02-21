@@ -1,6 +1,6 @@
 # Analog/Digital
 
-An LED matrix art installation for the Adafruit MatrixPortal ESP32-S3, driving a chain of nine 64-pixel-wide HUB75 panels. The display alternates between two visual modes toggled via serial input.
+An LED matrix art installation for the Adafruit MatrixPortal ESP32-S3, driving a chain of nine 64-pixel-wide HUB75 panels. The display switches between two visual modes controlled by a hardware switch on pin A1.
 
 ## Hardware
 
@@ -39,7 +39,14 @@ At least 2 eyes are always visible, with up to 5 active at once. New eyes are pl
 
 ## Controls
 
-Send a space character (`' '`) over the serial console (115200 baud) to toggle between analog and digital modes.
+A switch wired between pin **A1** and **GND** selects the active mode:
+
+| A1 state | Mode |
+|----------|------|
+| LOW (pulled to GND) | Analog (waveforms) |
+| HIGH (floating / pulled high) | Digital (binary rain) |
+
+The internal pullup is enabled, so with nothing connected the display defaults to digital mode.
 
 ## Dependencies
 

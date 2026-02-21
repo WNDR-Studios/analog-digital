@@ -22,8 +22,11 @@ Sensor::Sensor(int inPin, int outPin, int midiChannel) {
 
     _state = LOW;
     _noteDuration = 5000;
+    _debounceTime = 250;
+    _debouncing = false;
     _noteOn = false;
     _noteTimer = 0;
+    _debounceTimer = 0;
 }
 
 /**
@@ -70,7 +73,8 @@ void Sensor::init() {
 /**
  * Polls the sensor and manages note timing. Call every loop iteration.
  *
- * Detects rising edges (LOW → HIGH) on the input pin to trigger playNote().
+ * Detects rising edges (LOW → HIGH) on the input pin. The input must stay
+ * HIGH for _debounceTime (250ms) before triggering, filtering out noise.
  * While a note is active, new triggers are ignored until the note expires.
  */
 void Sensor::check() {
@@ -79,11 +83,27 @@ void Sensor::check() {
     if (_noteOn) return;
 
     int curState = digitalRead(_inPin);
+
+    if (_debouncing) {
+      if (curState == LOW) {
+        // Input dropped before debounce period elapsed — false trigger
+        _debouncing = false;
+      } else if (_debounceTimer >= _debounceTime) {
+        // Input held HIGH long enough — confirmed trigger
+        _debouncing = false;
+        _state = HIGH;
+        playNote();
+      }
+      return;
+    }
+
     if (curState == _state) return;
 
     if (curState == HIGH) {
-      playNote();
+      // Input just went HIGH — start debounce timer
+      _debouncing = true;
+      _debounceTimer = 0;
+    } else {
+      _state = curState;
     }
-
-    _state = curState;
 }

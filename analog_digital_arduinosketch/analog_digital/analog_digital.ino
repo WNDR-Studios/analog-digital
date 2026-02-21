@@ -46,10 +46,6 @@ const unsigned long microsPerFrame = 1000000 / maxFPS;
 // true = waveform mode, false = binary rain / eyes mode
 bool analogMode = true;
 
-// Auto-switch timer
-elapsedMillis timeSinceSwitch = 0;
-const unsigned long switchInterval = 30000; // 30 seconds
-
 
 /**
  * setup()
@@ -73,6 +69,8 @@ void setup(void) {
   matrix.fillScreen(0);
   matrix.show();
 
+  pinMode(A1, INPUT_PULLUP);
+
   initDigital(matrix);
   initAnalog(matrix);
 
@@ -88,11 +86,8 @@ void setup(void) {
  * eyes / binary rain scene.
  */
 void loop() {
-  // Auto-switch between modes every 30 seconds
-  if (timeSinceSwitch >= switchInterval) {
-    timeSinceSwitch = 0;
-    analogMode = !analogMode;
-  }
+  // Read pin A1: LOW = analog mode, HIGH = digital mode
+  analogMode = (digitalRead(A1) == LOW);
 
   // Frame rate limiter — skip until enough time has elapsed
   if (timeSinceFrame < microsPerFrame) return;

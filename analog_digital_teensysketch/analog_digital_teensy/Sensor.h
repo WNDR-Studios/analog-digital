@@ -22,8 +22,11 @@ private:
     int _midiCCChannel;    // Shared CC channel (16) — QLC+ only listens on one channel
     int _state;            // Last known pin state for edge detection
     unsigned long _noteDuration;
+    unsigned long _debounceTime; // How long input must stay HIGH before triggering (ms)
+    bool _debouncing;      // True while waiting for debounce period to confirm
     bool _noteOn;
     elapsedMillis _noteTimer;
+    elapsedMillis _debounceTimer;
 
     /** Turns off the note and output pin once _noteDuration has elapsed. */
     void _checkNote();

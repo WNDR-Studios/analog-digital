@@ -5,11 +5,11 @@
 int sensorCount = 5;
 
 Sensor sensors[5] = {
-  Sensor(0, 6, 1),
-  Sensor(1, 7, 2),
-  Sensor(2, 8, 3),
-  Sensor(3, 9, 4),
-  Sensor(4, 10, 5),
+  Sensor(0, 33, 1),
+  Sensor(1, 34, 2),
+  Sensor(2, 35, 3),
+  Sensor(3, 36, 4),
+  Sensor(4, 37, 5),
 };
 
 class Sensor;
@@ -43,15 +43,14 @@ void checkSensors() {
 
 /** Debug helper: fires all sensors at once, waits for them to auto-off, then pauses. */
 void test() {
+  delay(6000);
   for (int i = 0; i < sensorCount; i++) {
     sensors[i].playNote();
   }
 
-  delay(4200);
+  delay(6000);
 
   for (int i = 0; i < sensorCount; i++) {
     sensors[i].check();
   }
-
-  delay(5000);
 }

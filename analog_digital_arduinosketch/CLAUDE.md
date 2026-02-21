@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Arduino sketch for an LED matrix art installation running on Adafruit MatrixPortal ESP32-S3. Drives nine chained 64-wide HUB75 panels (576x32 pixels, rotated 90° so the long axis is vertical). Two display modes toggle via serial space character.
+Arduino sketch for an LED matrix art installation running on Adafruit MatrixPortal ESP32-S3. Drives nine chained 64-wide HUB75 panels (576x32 pixels, rotated 90° so the long axis is vertical). Two display modes selected by a hardware switch on pin A1 (LOW = analog, HIGH = digital; internal pullup enabled).
 
 ## Build Commands
 
@@ -15,7 +15,7 @@ Open `analog_digital/analog_digital.ino` in Arduino IDE with ESP32-S3 board supp
 
 ## Architecture
 
-**Main sketch** (`analog_digital.ino`): Initializes matrix hardware, runs 60 FPS frame loop, handles mode toggle via serial.
+**Main sketch** (`analog_digital.ino`): Initializes matrix hardware, runs 60 FPS frame loop. Reads pin A1 each loop iteration to select mode (LOW = analog, HIGH = digital, internal pullup enabled).
 
 **Analog mode** (`analog.h`/`analog.cpp`): Scrolling colored waveforms. Six generator functions (sin, triangle, saw, shark-fin, square, noise) convert Y position to X pixel coordinate. Up to 4 concurrent waves with independent direction, speed, frequency, and color from a 12-color palette.
 
