@@ -4,9 +4,14 @@ Teensy sketch that reads 5 digital sensors and outputs USB MIDI for Analog Digit
 
 ## How It Works
 
-Each sensor monitors a digital input pin for a rising edge. When triggered it sends a MIDI note-on and CC message, drives an output pin HIGH for LED displays, and automatically turns everything off after a timed duration.
+Each sensor operates in two modes:
 
-- **Notes** are sent on per-sensor MIDI channels (1-5)
+**Analog mode** (default): On startup a sustained MIDI note-on is sent on the sensor's analog channel and held until a trigger fires.
+
+**Digital mode** (triggered): When the input pin goes HIGH and stays HIGH for 250ms, the analog note stops and a MIDI note-on plus CC message fires on the digital channel. After 5 seconds the digital note turns off and analog resumes automatically.
+
+MIDI channels are assigned in pairs per sensor: sensor 1 = ch 1 (analog) / ch 2 (digital), sensor 2 = ch 3/4, sensor 3 = ch 5/6, sensor 4 = ch 7/8, sensor 5 = ch 9/10.
+
 - **CC messages** are sent on channel 16 for QLC+ lighting control
 
 ## Building
