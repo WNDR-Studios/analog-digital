@@ -23,7 +23,7 @@ Sensor::Sensor(int inPin, int outPin, int midiChannelAnalog, int midiChannelDigi
 
     _state = LOW;
     _noteDuration = 5000;
-    _debounceTime = 250;
+    _debounceTime = 20;
     _debouncing = false;
     _analogActive = false;
     _digitalActive = false;

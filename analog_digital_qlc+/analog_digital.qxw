@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Workspace>
-<Workspace xmlns="http://www.qlcplus.org/Workspace" CurrentWindow="VC">
+<Workspace xmlns="http://www.qlcplus.org/Workspace" CurrentWindow="SDESK">
  <Creator>
   <Name>Q Light Controller Plus</Name>
   <Version>5.2.0</Version>
@@ -10,10 +10,8 @@
   <InputOutputMap>
    <BeatGenerator BeatType="Internal" BPM="120"/>
    <Universe Name="Universe 1" ID="0">
-    <Input Plugin="MIDI" UID="Default App Loopback (B)" Line="1"/>
-    <Output Plugin="DMX USB" UID="DMX USB PRO - DMX Output 1 - (S/N: EN501459)" Line="0">
-     <PluginParameters UniverseChannels="96"/>
-    </Output>
+    <Input Plugin="MIDI" UID="Default App Loopback (B)" Line="3"/>
+    <Output Plugin="DMX USB" UID="DMX USB PRO - DMX Output 1 - (S/N: EN501459)" Line="0"/>
    </Universe>
    <Universe Name="Universe 2" ID="1"/>
    <Universe Name="Universe 3" ID="2"/>
@@ -372,6 +370,58 @@
      <Input ID="0" Universe="0" Channel="3"/>
     </Button>
    </SoloFrame>
+   <SoloFrame Caption="Row 2" ID="7">
+    <WindowState Visible="True" X="147" Y="220" Width="206" Height="147"/>
+    <AllowResize>True</AllowResize>
+    <ShowHeader>True</ShowHeader>
+    <ShowEnableButton>True</ShowEnableButton>
+    <Collapsed>False</Collapsed>
+    <Disabled>False</Disabled>
+    <Button Caption="Digital" ID="12">
+     <WindowState Visible="True" X="103" Y="44" Width="88" Height="88"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="20"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="6"/>
+    </Button>
+    <Button Caption="Analog" ID="11">
+     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="21"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="7"/>
+    </Button>
+   </SoloFrame>
+   <SoloFrame Caption="Row 3" ID="8">
+    <WindowState Visible="True" X="147" Y="368" Width="206" Height="147"/>
+    <AllowResize>True</AllowResize>
+    <ShowHeader>True</ShowHeader>
+    <ShowEnableButton>True</ShowEnableButton>
+    <Collapsed>False</Collapsed>
+    <Disabled>False</Disabled>
+    <Button Caption="Analog" ID="13">
+     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="26"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="11"/>
+    </Button>
+    <Button Caption="Digital" ID="14">
+     <WindowState Visible="True" X="103" Y="44" Width="83" Height="83"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="25"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="10"/>
+    </Button>
+   </SoloFrame>
    <SoloFrame Caption="Row 4" ID="9">
     <WindowState Visible="True" X="147" Y="515" Width="206" Height="132"/>
     <AllowResize>True</AllowResize>
@@ -422,58 +472,6 @@
      <Function ID="28"/>
      <Action>Toggle</Action>
      <Input ID="0" Universe="0" Channel="18"/>
-    </Button>
-   </SoloFrame>
-   <SoloFrame Caption="Row 2" ID="7">
-    <WindowState Visible="True" X="147" Y="220" Width="206" Height="147"/>
-    <AllowResize>True</AllowResize>
-    <ShowHeader>True</ShowHeader>
-    <ShowEnableButton>True</ShowEnableButton>
-    <Collapsed>False</Collapsed>
-    <Disabled>False</Disabled>
-    <Button Caption="Analog" ID="11">
-     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="21"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="7"/>
-    </Button>
-    <Button Caption="Digital" ID="12">
-     <WindowState Visible="True" X="103" Y="44" Width="88" Height="88"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="20"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="6"/>
-    </Button>
-   </SoloFrame>
-   <SoloFrame Caption="Row 3" ID="8">
-    <WindowState Visible="True" X="147" Y="368" Width="206" Height="147"/>
-    <AllowResize>True</AllowResize>
-    <ShowHeader>True</ShowHeader>
-    <ShowEnableButton>True</ShowEnableButton>
-    <Collapsed>False</Collapsed>
-    <Disabled>False</Disabled>
-    <Button Caption="Analog" ID="13">
-     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="26"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="11"/>
-    </Button>
-    <Button Caption="Digital" ID="14">
-     <WindowState Visible="True" X="103" Y="44" Width="83" Height="83"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="25"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="10"/>
     </Button>
    </SoloFrame>
   </Frame>
