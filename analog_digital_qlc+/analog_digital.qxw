@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Workspace>
-<Workspace xmlns="http://www.qlcplus.org/Workspace" CurrentWindow="SDESK">
+<Workspace xmlns="http://www.qlcplus.org/Workspace" CurrentWindow="VC">
  <Creator>
   <Name>Q Light Controller Plus</Name>
   <Version>5.2.0</Version>
@@ -10,8 +10,10 @@
   <InputOutputMap>
    <BeatGenerator BeatType="Internal" BPM="120"/>
    <Universe Name="Universe 1" ID="0">
-    <Input Plugin="MIDI" UID="Default App Loopback (B)" Line="3"/>
-    <Output Plugin="DMX USB" UID="DMX USB PRO - DMX Output 1 - (S/N: EN501459)" Line="0"/>
+    <Input Plugin="MIDI" UID="Default App Loopback (B)" Line="2"/>
+    <Output Plugin="DMX USB" UID="DMX USB PRO - DMX Output 1 - (S/N: EN501459)" Line="0">
+     <PluginParameters UniverseChannels="96"/>
+    </Output>
    </Universe>
    <Universe Name="Universe 2" ID="1"/>
    <Universe Name="Universe 3" ID="2"/>
@@ -315,10 +317,26 @@
    <FixtureVal ID="4">15,100</FixtureVal>
    <FixtureGroup ID="4"/>
   </Function>
+  <Function ID="33" Type="Scene" Name="New Scene 33">
+   <Speed FadeIn="0" FadeOut="0" Duration="0"/>
+   <FixtureVal ID="2">0,255,1,255,2,255,3,0,4,255,5,255,6,255,7,0,8,255,9,255,10,255,11,0,15,255</FixtureVal>
+   <FixtureVal ID="3">0,255,1,255,2,255,3,0,4,255,5,255,6,255,7,0,8,255,9,255,10,255,11,0,15,13</FixtureVal>
+   <FixtureVal ID="4">0,255,1,255,2,255,3,0,4,255,5,255,6,255,7,0,8,255,9,255,10,255,11,0,15,13</FixtureVal>
+   <FixtureVal ID="1">0,255,1,255,2,255,3,0,4,255,5,255,6,255,7,0,8,255,9,255,10,255,11,0,15,255</FixtureVal>
+   <FixtureVal ID="0">0,255,1,255,2,255,3,0,4,255,5,255,6,255,7,0,8,255,9,255,10,255,11,0,15,255</FixtureVal>
+  </Function>
   <Function ID="34" Type="Scene" Name="Row 5 Full">
    <Speed FadeIn="0" FadeOut="0" Duration="0"/>
    <FixtureVal ID="4">15,255</FixtureVal>
    <FixtureGroup ID="4"/>
+  </Function>
+  <Function ID="35" Type="Scene" Name="All White">
+   <Speed FadeIn="0" FadeOut="0" Duration="0"/>
+   <FixtureVal ID="0">0,255,1,255,2,255,3,255,4,255,5,255,6,255,7,255,8,255,9,255,10,255,11,255,15,255</FixtureVal>
+   <FixtureVal ID="1">0,255,1,255,2,255,3,255,4,255,5,255,6,255,7,255,8,255,9,255,10,255,11,255,15,255</FixtureVal>
+   <FixtureVal ID="2">0,255,1,255,2,252,3,255,4,255,5,255,6,255,7,255,8,255,9,255,10,255,11,255,15,255</FixtureVal>
+   <FixtureVal ID="3">0,255,1,255,2,255,3,255,4,255,5,255,6,0,7,0,8,0,9,0,10,0,11,0,15,0</FixtureVal>
+   <FixtureVal ID="4">0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,15,0</FixtureVal>
   </Function>
   <Monitor DisplayMode="0" ShowLabels="0">
    <Font>Arial,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1</Font>
@@ -344,6 +362,14 @@
    <ShowEnableButton>True</ShowEnableButton>
    <Collapsed>False</Collapsed>
    <Disabled>False</Disabled>
+   <Button Caption="All White" ID="0">
+    <WindowState Visible="True" X="397" Y="103" Width="117" Height="103"/>
+    <Appearance>
+     <BackgroundColor>4282664004</BackgroundColor>
+    </Appearance>
+    <Function ID="35"/>
+    <Action>Toggle</Action>
+   </Button>
    <SoloFrame Caption="Row 1" ID="4">
     <WindowState Visible="True" X="147" Y="73" Width="206" Height="147"/>
     <AllowResize>True</AllowResize>
@@ -368,58 +394,6 @@
      <Function ID="8"/>
      <Action>Toggle</Action>
      <Input ID="0" Universe="0" Channel="3"/>
-    </Button>
-   </SoloFrame>
-   <SoloFrame Caption="Row 2" ID="7">
-    <WindowState Visible="True" X="147" Y="220" Width="206" Height="147"/>
-    <AllowResize>True</AllowResize>
-    <ShowHeader>True</ShowHeader>
-    <ShowEnableButton>True</ShowEnableButton>
-    <Collapsed>False</Collapsed>
-    <Disabled>False</Disabled>
-    <Button Caption="Digital" ID="12">
-     <WindowState Visible="True" X="103" Y="44" Width="88" Height="88"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="20"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="6"/>
-    </Button>
-    <Button Caption="Analog" ID="11">
-     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="21"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="7"/>
-    </Button>
-   </SoloFrame>
-   <SoloFrame Caption="Row 3" ID="8">
-    <WindowState Visible="True" X="147" Y="368" Width="206" Height="147"/>
-    <AllowResize>True</AllowResize>
-    <ShowHeader>True</ShowHeader>
-    <ShowEnableButton>True</ShowEnableButton>
-    <Collapsed>False</Collapsed>
-    <Disabled>False</Disabled>
-    <Button Caption="Analog" ID="13">
-     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="26"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="11"/>
-    </Button>
-    <Button Caption="Digital" ID="14">
-     <WindowState Visible="True" X="103" Y="44" Width="83" Height="83"/>
-     <Appearance>
-      <BackgroundColor>4282664004</BackgroundColor>
-     </Appearance>
-     <Function ID="25"/>
-     <Action>Toggle</Action>
-     <Input ID="0" Universe="0" Channel="10"/>
     </Button>
    </SoloFrame>
    <SoloFrame Caption="Row 4" ID="9">
@@ -448,6 +422,32 @@
      <Input ID="0" Universe="0" Channel="14"/>
     </Button>
    </SoloFrame>
+   <SoloFrame Caption="Row 3" ID="8">
+    <WindowState Visible="True" X="147" Y="368" Width="206" Height="147"/>
+    <AllowResize>True</AllowResize>
+    <ShowHeader>True</ShowHeader>
+    <ShowEnableButton>True</ShowEnableButton>
+    <Collapsed>False</Collapsed>
+    <Disabled>False</Disabled>
+    <Button Caption="Analog" ID="13">
+     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="26"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="11"/>
+    </Button>
+    <Button Caption="Digital" ID="14">
+     <WindowState Visible="True" X="103" Y="44" Width="83" Height="83"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="25"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="10"/>
+    </Button>
+   </SoloFrame>
    <SoloFrame Caption="Row 5" ID="10">
     <WindowState Visible="True" X="147" Y="648" Width="206" Height="132"/>
     <AllowResize>True</AllowResize>
@@ -472,6 +472,32 @@
      <Function ID="28"/>
      <Action>Toggle</Action>
      <Input ID="0" Universe="0" Channel="18"/>
+    </Button>
+   </SoloFrame>
+   <SoloFrame Caption="Row 2" ID="7">
+    <WindowState Visible="True" X="147" Y="220" Width="206" Height="147"/>
+    <AllowResize>True</AllowResize>
+    <ShowHeader>True</ShowHeader>
+    <ShowEnableButton>True</ShowEnableButton>
+    <Collapsed>False</Collapsed>
+    <Disabled>False</Disabled>
+    <Button Caption="Digital" ID="12">
+     <WindowState Visible="True" X="103" Y="44" Width="88" Height="88"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="20"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="6"/>
+    </Button>
+    <Button Caption="Analog" ID="11">
+     <WindowState Visible="True" X="14" Y="44" Width="83" Height="83"/>
+     <Appearance>
+      <BackgroundColor>4282664004</BackgroundColor>
+     </Appearance>
+     <Function ID="21"/>
+     <Action>Toggle</Action>
+     <Input ID="0" Universe="0" Channel="7"/>
     </Button>
    </SoloFrame>
   </Frame>
