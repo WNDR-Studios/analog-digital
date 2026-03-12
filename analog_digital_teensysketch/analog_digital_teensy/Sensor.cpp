@@ -22,7 +22,7 @@ Sensor::Sensor(int inPin, int outPin, int midiChannelAnalog, int midiChannelDigi
     _midiCCChannel = 16;
 
     _state = LOW;
-    _noteDuration = 5000;
+    _noteDuration = 4500;
     _debounceTime = 20;
     _debouncing = false;
     _analogActive = false;
@@ -59,6 +59,7 @@ void Sensor::playDigital() {
     digitalWrite(_outPin, HIGH);
     usbMIDI.sendNoteOn(_midiNote, _midiVelocity, _midiChannelDigital);
     usbMIDI.sendControlChange(_midiCCOn, 1, _midiCCChannel);
+    usbMIDI.send_now();
     _noteTimer = 0;
     _digitalActive = true;
 }
@@ -72,6 +73,7 @@ void Sensor::stopDigital() {
     digitalWrite(_outPin, LOW);
     usbMIDI.sendNoteOff(_midiNote, _midiVelocity, _midiChannelDigital);
     usbMIDI.sendControlChange(_midiCCOff, 1, _midiCCChannel);
+    usbMIDI.send_now();
     _digitalActive = false;
     _noteTimer = 0;
     playAnalog();
@@ -104,7 +106,7 @@ void Sensor::init() {
  * Polls the sensor and manages note timing. Call every loop iteration.
  *
  * Detects rising edges (LOW → HIGH) on the input pin. The input must stay
- * HIGH for _debounceTime (250ms) before triggering, filtering out noise.
+ * HIGH for _debounceTime (20ms) before triggering, filtering out noise.
  * While a digital note is active, new triggers are ignored until it expires.
  */
 void Sensor::check() {

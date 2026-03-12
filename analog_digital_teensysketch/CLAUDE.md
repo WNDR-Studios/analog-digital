@@ -16,7 +16,7 @@ Open `analog_digital_teensy/analog_digital_teensy.ino` in Arduino IDE (or Teensy
 
 **Sensor class** (`Sensor.h`/`Sensor.cpp`): Each sensor operates in two modes:
 - **Analog mode** (default): A sustained MIDI note-on is sent on `midiChannelAnalog` immediately after `init()` and held indefinitely.
-- **Digital mode** (triggered): When the input pin transitions LOW-to-HIGH (after 250ms debounce), the analog note stops and a note-on is sent on `midiChannelDigital` plus a CC message on channel 16. After 5 seconds the digital note-off fires, the CC off is sent, and analog mode resumes.
+- **Digital mode** (triggered): When the input pin transitions LOW-to-HIGH, the analog note stops and a note-on is sent on `midiChannelDigital` plus a CC message on channel 16. After 5 seconds the digital note-off fires, the CC off is sent, and analog mode resumes.
 
 Public methods: `playAnalog()`, `stopAnalog()`, `playDigital()`, `stopDigital()`, `init()`, `check()`.
 
@@ -24,6 +24,8 @@ Key conventions:
 - Each sensor has two MIDI channels: odd for analog, even for digital (ch 1/2, 3/4, 5/6, 7/8, 9/10)
 - CC messages go on channel 16; CC numbers derived from the analog channel: on = analogChannel * 2, off = analogChannel * 2 + 1
 - `usbMIDI` is the Teensy USB MIDI interface (no external MIDI library needed)
+- `usbMIDI.read()` must be called every loop iteration to keep the USB stack processing and prevent the outgoing buffer from stalling
+- A `delay(1000)` in `setup()` before sending any MIDI ensures the USB host has enumerated the device before notes are sent
 
 ## Git Commits
 

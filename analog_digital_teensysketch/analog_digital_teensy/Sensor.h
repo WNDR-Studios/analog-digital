@@ -7,7 +7,7 @@
  * Sensor - Reads a digital input and outputs USB MIDI in two modes: analog and digital.
  *
  * After init(), the sensor immediately plays a sustained note on the analog MIDI channel.
- * When the input pin transitions LOW-to-HIGH (trigger), the analog note stops and a
+ * When the input pin goes LOW-to-HIGH (trigger), the analog note stops and a
  * digital note begins on the digital MIDI channel. After the note duration elapses,
  * the digital note stops and the analog note resumes automatically.
  *

@@ -20,12 +20,15 @@ void test();
 
 void setup() {
   Serial.begin(115200);
+  delay(1000);
+  Serial.println("setup complete");
   setupSensors();
 }
 
 void loop() {
   checkSensors();
   // test();
+  usbMIDI.read();
 }
 
 /** Initializes all sensor pin modes and starts their analog notes. */
